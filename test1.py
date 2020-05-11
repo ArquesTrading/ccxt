@@ -28,5 +28,6 @@ def get_ticker():
 get_ticker()
 
 
+
 #print(root)
 #sys.path.append(root + '/python')
