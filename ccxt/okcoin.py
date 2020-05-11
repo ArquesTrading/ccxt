@@ -5,7 +5,6 @@
 
 from ccxt.okex import okex
 
-
 class okcoin(okex):
 
     def describe(self):

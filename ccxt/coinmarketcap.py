@@ -7,7 +7,6 @@ from ccxt.base.exchange import Exchange
 import math
 from ccxt.base.errors import ExchangeError
 
-
 class coinmarketcap(Exchange):
 
     def describe(self):

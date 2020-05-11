@@ -5,7 +5,6 @@
 
 from ccxt.zb import zb
 
-
 class bitkk(zb):
 
     def describe(self):

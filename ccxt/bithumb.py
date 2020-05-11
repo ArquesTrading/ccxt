@@ -15,7 +15,6 @@ from ccxt.base.errors import InvalidAddress
 from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import ExchangeNotAvailable
 
-
 class bithumb(Exchange):
 
     def describe(self):

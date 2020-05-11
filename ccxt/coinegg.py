@@ -13,7 +13,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import DDoSProtection
 from ccxt.base.errors import InvalidNonce
 
-
 class coinegg(Exchange):
 
     def describe(self):

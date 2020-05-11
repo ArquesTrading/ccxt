@@ -10,7 +10,6 @@ from ccxt.base.errors import AuthenticationError
 from ccxt.base.errors import ArgumentsRequired
 from ccxt.base.errors import RateLimitExceeded
 
-
 class coinfalcon(Exchange):
 
     def describe(self):

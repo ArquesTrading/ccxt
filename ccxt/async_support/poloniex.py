@@ -21,7 +21,6 @@ from ccxt.base.errors import OnMaintenance
 from ccxt.base.errors import InvalidNonce
 from ccxt.base.errors import RequestTimeout
 
-
 class poloniex(Exchange):
 
     def describe(self):

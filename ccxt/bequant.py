@@ -5,7 +5,6 @@
 
 from ccxt.hitbtc import hitbtc
 
-
 class bequant(hitbtc):
 
     def describe(self):

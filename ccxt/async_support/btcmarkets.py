@@ -14,7 +14,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import DDoSProtection
 from ccxt.base.decimal_to_precision import ROUND
 
-
 class btcmarkets(Exchange):
 
     def describe(self):

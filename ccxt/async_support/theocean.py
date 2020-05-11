@@ -18,7 +18,6 @@ from ccxt.base.errors import OrderNotFillable
 from ccxt.base.errors import NotSupported
 from ccxt.base.errors import ExchangeNotAvailable
 
-
 class theocean(Exchange):
 
     def describe(self):

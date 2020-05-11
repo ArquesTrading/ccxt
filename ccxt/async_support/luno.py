@@ -8,7 +8,6 @@ import base64
 from ccxt.base.errors import ExchangeError
 from ccxt.base.errors import ArgumentsRequired
 
-
 class luno(Exchange):
 
     def describe(self):

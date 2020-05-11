@@ -18,7 +18,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import OnMaintenance
 from ccxt.base.errors import InvalidNonce
 
-
 class bitfinex2(bitfinex):
 
     def describe(self):

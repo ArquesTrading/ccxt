@@ -19,7 +19,6 @@ from ccxt.base.errors import ExchangeNotAvailable
 from ccxt.base.errors import InvalidNonce
 from ccxt.base.errors import RequestTimeout
 
-
 class crex24(Exchange):
 
     def describe(self):

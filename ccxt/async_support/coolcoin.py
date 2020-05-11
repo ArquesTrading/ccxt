@@ -5,7 +5,6 @@
 
 from ccxt.async_support.coinegg import coinegg
 
-
 class coolcoin(coinegg):
 
     def describe(self):

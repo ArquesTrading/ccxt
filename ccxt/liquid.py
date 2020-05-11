@@ -15,7 +15,6 @@ from ccxt.base.errors import NotSupported
 from ccxt.base.errors import DDoSProtection
 from ccxt.base.errors import InvalidNonce
 
-
 class liquid(Exchange):
 
     def describe(self):

@@ -6,7 +6,6 @@
 from ccxt.base.exchange import Exchange
 import math
 
-
 class lykke(Exchange):
 
     def describe(self):

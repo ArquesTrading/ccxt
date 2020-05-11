@@ -11,7 +11,6 @@ from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import InvalidNonce
 
-
 class coinfloor(Exchange):
 
     def describe(self):

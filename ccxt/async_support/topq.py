@@ -5,7 +5,6 @@
 
 from ccxt.async_support.bw import bw
 
-
 class topq(bw):
 
     def describe(self):

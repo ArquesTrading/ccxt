@@ -6,7 +6,6 @@
 from ccxt.base.exchange import Exchange
 
 # -----------------------------------------------------------------------------
-
 try:
     basestring  # Python 3
 except NameError:

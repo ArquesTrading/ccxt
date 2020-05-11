@@ -18,7 +18,6 @@ from ccxt.base.errors import NetworkError
 from ccxt.base.errors import DDoSProtection
 from ccxt.base.errors import InvalidNonce
 
-
 class digifinex(Exchange):
 
     def describe(self):

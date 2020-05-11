@@ -5,7 +5,6 @@
 
 from ccxt.coinegg import coinegg
 
-
 class coolcoin(coinegg):
 
     def describe(self):

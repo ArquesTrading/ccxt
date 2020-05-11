@@ -16,7 +16,6 @@ from ccxt.base.errors import BadSymbol
 from ccxt.base.errors import DDoSProtection
 from ccxt.base.errors import ExchangeNotAvailable
 
-
 class whitebit(Exchange):
 
     def describe(self):

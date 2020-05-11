@@ -6,7 +6,6 @@
 from ccxt.base.exchange import Exchange
 from ccxt.base.errors import ExchangeError
 
-
 class flowbtc(Exchange):
 
     def describe(self):

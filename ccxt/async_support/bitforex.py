@@ -17,7 +17,6 @@ from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import DDoSProtection
 
-
 class bitforex(Exchange):
 
     def describe(self):

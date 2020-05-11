@@ -5,7 +5,6 @@
 
 from ccxt.async_support.hitbtc import hitbtc
 
-
 class bequant(hitbtc):
 
     def describe(self):

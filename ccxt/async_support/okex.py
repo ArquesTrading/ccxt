@@ -33,7 +33,6 @@ from ccxt.base.errors import RequestTimeout
 from ccxt.base.decimal_to_precision import TRUNCATE
 from ccxt.base.decimal_to_precision import TICK_SIZE
 
-
 class okex(Exchange):
 
     def describe(self):

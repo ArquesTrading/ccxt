@@ -17,7 +17,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import InvalidNonce
 from ccxt.base.decimal_to_precision import TRUNCATE
 
-
 class aofex(Exchange):
 
     def describe(self):

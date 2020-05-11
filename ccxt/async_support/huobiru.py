@@ -5,7 +5,6 @@
 
 from ccxt.async_support.huobipro import huobipro
 
-
 class huobiru(huobipro):
 
     def describe(self):

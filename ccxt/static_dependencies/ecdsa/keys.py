@@ -11,7 +11,6 @@ from .util import oid_ecPublicKey, encoded_oid_ecPublicKey
 from six import PY3, b
 from hashlib import sha1
 
-
 class BadSignatureError(Exception):
     pass
 

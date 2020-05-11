@@ -14,7 +14,6 @@ from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import OnMaintenance
 
-
 class coinone(Exchange):
 
     def describe(self):

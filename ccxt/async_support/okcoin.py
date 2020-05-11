@@ -5,7 +5,6 @@
 
 from ccxt.async_support.okex import okex
 
-
 class okcoin(okex):
 
     def describe(self):

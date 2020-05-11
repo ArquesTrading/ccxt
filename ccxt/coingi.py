@@ -14,7 +14,6 @@ except NameError:
 import math
 from ccxt.base.errors import ExchangeError
 
-
 class coingi(Exchange):
 
     def describe(self):

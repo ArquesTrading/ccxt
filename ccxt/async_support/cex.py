@@ -23,7 +23,6 @@ from ccxt.base.errors import NotSupported
 from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import InvalidNonce
 
-
 class cex(Exchange):
 
     def describe(self):

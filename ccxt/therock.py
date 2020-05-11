@@ -11,7 +11,6 @@ from ccxt.base.errors import BadRequest
 from ccxt.base.errors import InvalidAddress
 from ccxt.base.errors import OrderNotFound
 
-
 class therock(Exchange):
 
     def describe(self):

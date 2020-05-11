@@ -7,7 +7,6 @@ from ccxt.async_support.acx import acx
 import math
 from ccxt.base.errors import ArgumentsRequired
 
-
 class kuna(acx):
 
     def describe(self):

@@ -20,7 +20,6 @@ from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import ExchangeNotAvailable
 from ccxt.base.errors import InvalidNonce
 
-
 class kucoin(Exchange):
 
     def describe(self):

@@ -10,7 +10,6 @@ class UnknownCurveError(Exception):
 def orderlen(order):
     return (1+len("%x" % order))//2  # bytes
 
-
 # the NIST curves
 class Curve:
     def __init__(self, name, curve, generator, oid, openssl_name=None):

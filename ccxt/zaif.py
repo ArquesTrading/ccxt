@@ -9,7 +9,6 @@ import math
 from ccxt.base.errors import ExchangeError
 from ccxt.base.errors import BadRequest
 
-
 class zaif(Exchange):
 
     def describe(self):

@@ -16,7 +16,6 @@ from ccxt.base.decimal_to_precision import TRUNCATE
 from ccxt.base.decimal_to_precision import DECIMAL_PLACES
 from ccxt.base.decimal_to_precision import NO_PADDING
 
-
 class bytetrade(Exchange):
 
     def describe(self):

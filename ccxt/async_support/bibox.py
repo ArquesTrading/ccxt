@@ -25,7 +25,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import DDoSProtection
 from ccxt.base.errors import ExchangeNotAvailable
 
-
 class bibox(Exchange):
 
     def describe(self):

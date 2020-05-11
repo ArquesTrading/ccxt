@@ -20,7 +20,6 @@ from ccxt.base.errors import ExchangeNotAvailable
 from ccxt.base.errors import OnMaintenance
 from ccxt.base.decimal_to_precision import TICK_SIZE
 
-
 class deribit(Exchange):
 
     def describe(self):

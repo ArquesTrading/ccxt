@@ -10,7 +10,6 @@ from ccxt.base.errors import ExchangeError
 from ccxt.base.errors import AuthenticationError
 from ccxt.base.errors import ExchangeNotAvailable
 
-
 class exx(Exchange):
 
     def describe(self):

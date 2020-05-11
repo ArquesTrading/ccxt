@@ -16,7 +16,6 @@ from ccxt.base.errors import OrderImmediatelyFillable
 from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import InvalidNonce
 
-
 class bitbay(Exchange):
 
     def describe(self):

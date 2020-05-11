@@ -12,7 +12,6 @@ from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import OrderNotFound
 from ccxt.base.decimal_to_precision import TICK_SIZE
 
-
 class ftx(Exchange):
 
     def describe(self):

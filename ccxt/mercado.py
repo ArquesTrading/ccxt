@@ -9,7 +9,6 @@ from ccxt.base.errors import ExchangeError
 from ccxt.base.errors import ArgumentsRequired
 from ccxt.base.errors import InvalidOrder
 
-
 class mercado(Exchange):
 
     def describe(self):

@@ -15,7 +15,6 @@ import hashlib
 from ccxt.base.errors import ExchangeError
 from ccxt.base.errors import ArgumentsRequired
 
-
 class bit2c(Exchange):
 
     def describe(self):

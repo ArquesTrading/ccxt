@@ -15,7 +15,6 @@ from ccxt.base.errors import DDoSProtection
 from ccxt.base.errors import ExchangeNotAvailable
 from ccxt.base.decimal_to_precision import TICK_SIZE
 
-
 class bitmex(Exchange):
 
     def describe(self):

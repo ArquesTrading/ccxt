@@ -12,7 +12,6 @@ from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import InvalidNonce
 
-
 class bitbank(Exchange):
 
     def describe(self):

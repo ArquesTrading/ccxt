@@ -24,7 +24,6 @@ from ccxt.base.errors import NotSupported
 from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import OnMaintenance
 
-
 class coinbasepro(Exchange):
 
     def describe(self):

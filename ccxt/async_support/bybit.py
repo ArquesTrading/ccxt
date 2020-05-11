@@ -17,7 +17,6 @@ from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import InvalidNonce
 from ccxt.base.decimal_to_precision import TICK_SIZE
 
-
 class bybit(Exchange):
 
     def describe(self):

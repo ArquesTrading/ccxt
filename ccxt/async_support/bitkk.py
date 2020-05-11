@@ -5,7 +5,6 @@
 
 from ccxt.async_support.zb import zb
 
-
 class bitkk(zb):
 
     def describe(self):

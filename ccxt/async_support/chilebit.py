@@ -5,7 +5,6 @@
 
 from ccxt.async_support.foxbit import foxbit
 
-
 class chilebit(foxbit):
 
     def describe(self):

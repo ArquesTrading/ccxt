@@ -11,7 +11,6 @@ from ccxt.base.errors import ArgumentsRequired
 from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import DDoSProtection
 
-
 class lbank(Exchange):
 
     def describe(self):

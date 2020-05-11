@@ -5,7 +5,6 @@
 
 from ccxt.async_support.fcoin import fcoin
 
-
 class fcoinjp(fcoin):
 
     def describe(self):

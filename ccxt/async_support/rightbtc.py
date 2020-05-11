@@ -13,7 +13,6 @@ from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import OrderNotFound
 from ccxt.base.decimal_to_precision import ROUND
 
-
 class rightbtc(Exchange):
 
     def describe(self):

@@ -14,7 +14,6 @@ from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import DDoSProtection
 
-
 class stex(Exchange):
 
     def describe(self):

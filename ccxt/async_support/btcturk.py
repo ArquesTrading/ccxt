@@ -9,7 +9,6 @@ import hashlib
 import math
 from ccxt.base.errors import ExchangeError
 
-
 class btcturk(Exchange):
 
     def describe(self):

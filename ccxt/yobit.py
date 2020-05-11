@@ -22,7 +22,6 @@ from ccxt.base.errors import DDoSProtection
 from ccxt.base.errors import ExchangeNotAvailable
 from ccxt.base.errors import InvalidNonce
 
-
 class yobit(Exchange):
 
     def describe(self):

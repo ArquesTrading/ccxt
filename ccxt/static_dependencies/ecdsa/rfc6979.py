@@ -14,7 +14,6 @@ from binascii import hexlify
 from .util import number_to_string, number_to_string_crop
 from six import b
 
-
 def bit_length(num):
     # http://docs.python.org/dev/library/stdtypes.html#int.bit_length
     s = bin(num)  # binary representation:  bin(-37) --> '-0b100101'

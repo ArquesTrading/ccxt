@@ -20,7 +20,6 @@ from ccxt.base.errors import ExchangeNotAvailable
 from ccxt.base.errors import InvalidNonce
 from ccxt.base.decimal_to_precision import SIGNIFICANT_DIGITS
 
-
 class bitfinex(Exchange):
 
     def describe(self):

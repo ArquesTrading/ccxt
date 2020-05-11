@@ -5,7 +5,6 @@
 
 from ccxt.async_support.coinbasepro import coinbasepro
 
-
 class coinbaseprime(coinbasepro):
 
     def describe(self):

@@ -21,3 +21,4 @@ class fcoinjp(fcoin):
                 'referral': None,
             },
         })
+

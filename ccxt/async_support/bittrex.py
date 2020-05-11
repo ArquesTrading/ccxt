@@ -27,7 +27,6 @@ from ccxt.base.errors import OnMaintenance
 from ccxt.base.decimal_to_precision import TRUNCATE
 from ccxt.base.decimal_to_precision import DECIMAL_PLACES
 
-
 class bittrex(Exchange):
 
     def describe(self):

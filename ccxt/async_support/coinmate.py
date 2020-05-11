@@ -11,7 +11,6 @@ from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import RateLimitExceeded
 
-
 class coinmate(Exchange):
 
     def describe(self):

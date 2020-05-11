@@ -25,7 +25,6 @@ from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import OnMaintenance
 from ccxt.base.errors import InvalidNonce
 
-
 class exmo(Exchange):
 
     def describe(self):

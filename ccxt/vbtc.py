@@ -5,7 +5,6 @@
 
 from ccxt.foxbit import foxbit
 
-
 class vbtc(foxbit):
 
     def describe(self):

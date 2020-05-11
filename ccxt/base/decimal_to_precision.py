@@ -16,7 +16,6 @@ __all__ = [
     'decimal_to_precision',
 ]
 
-
 # rounding mode
 TRUNCATE = 0
 ROUND = 1

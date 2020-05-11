@@ -29,3 +29,4 @@ class huobiru(huobipro):
                 'fees': 'https://www.huobi.com.ru/ru-ru/about/fee/',
             },
         })
+

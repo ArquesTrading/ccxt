@@ -5,7 +5,6 @@
 
 from ccxt.coinbasepro import coinbasepro
 
-
 class coinbaseprime(coinbasepro):
 
     def describe(self):

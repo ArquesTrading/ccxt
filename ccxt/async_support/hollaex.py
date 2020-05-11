@@ -12,7 +12,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import NetworkError
 from ccxt.base.decimal_to_precision import TICK_SIZE
 
-
 class hollaex(Exchange):
 
     def describe(self):

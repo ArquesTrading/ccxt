@@ -14,7 +14,6 @@ from ccxt.base.errors import AddressPending
 from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import OrderNotFound
 
-
 class upbit(Exchange):
 
     def describe(self):

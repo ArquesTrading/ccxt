@@ -6,7 +6,6 @@
 from ccxt.async_support.base.exchange import Exchange
 import math
 
-
 class lykke(Exchange):
 
     def describe(self):

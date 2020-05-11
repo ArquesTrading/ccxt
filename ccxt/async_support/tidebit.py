@@ -9,7 +9,6 @@ from ccxt.base.errors import ArgumentsRequired
 from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import OrderNotFound
 
-
 class tidebit(Exchange):
 
     def describe(self):

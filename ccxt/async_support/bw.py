@@ -12,7 +12,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import ExchangeNotAvailable
 
-
 class bw(Exchange):
 
     def describe(self):

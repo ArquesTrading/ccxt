@@ -16,7 +16,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import NotSupported
 from ccxt.base.errors import DDoSProtection
 
-
 class gateio(Exchange):
 
     def describe(self):

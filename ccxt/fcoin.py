@@ -18,7 +18,6 @@ from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import ExchangeNotAvailable
 from ccxt.base.errors import InvalidNonce
 
-
 class fcoin(Exchange):
 
     def describe(self):

@@ -12,3 +12,4 @@ __all__ = ["curves", "der", "ecdsa", "ellipticcurve", "keys", "numbertheory",
 _hush_pyflakes = [SigningKey, VerifyingKey, BadSignatureError, BadDigestError,
                   NIST192p, NIST224p, NIST256p, NIST384p, NIST521p, SECP256k1]
 del _hush_pyflakes
+

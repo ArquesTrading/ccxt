@@ -8,7 +8,6 @@ from ccxt.base.errors import ArgumentsRequired
 from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import OrderNotFound
 
-
 class kkex(Exchange):
 
     def describe(self):

@@ -13,7 +13,6 @@ from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import OrderNotFound
 
-
 class oceanex(Exchange):
 
     def describe(self):

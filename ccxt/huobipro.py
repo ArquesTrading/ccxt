@@ -18,7 +18,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import ExchangeNotAvailable
 from ccxt.base.errors import RequestTimeout
 
-
 class huobipro(Exchange):
 
     def describe(self):

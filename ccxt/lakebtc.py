@@ -19,7 +19,6 @@ from ccxt.base.errors import BadSymbol
 from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import InvalidOrder
 
-
 class lakebtc(Exchange):
 
     def describe(self):

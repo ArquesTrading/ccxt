@@ -7,7 +7,6 @@ from ccxt.base.exchange import Exchange
 from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import OrderNotFound
 
-
 class acx(Exchange):
 
     def describe(self):

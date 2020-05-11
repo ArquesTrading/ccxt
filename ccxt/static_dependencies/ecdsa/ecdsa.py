@@ -1,5 +1,4 @@
 #! /usr/bin/env python
-
 """
 Implementation of Elliptic-Curve Digital Signatures.
 

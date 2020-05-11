@@ -6,7 +6,6 @@
 from ccxt.async_support.base.exchange import Exchange
 from ccxt.base.errors import ExchangeError
 
-
 class foxbit(Exchange):
 
     def describe(self):

@@ -37,6 +37,7 @@ from __future__ import division
 from six import python_2_unicode_compatible
 from . import numbertheory
 
+
 @python_2_unicode_compatible
 class CurveFp(object):
   """Elliptic Curve over the field of integers modulo a prime."""

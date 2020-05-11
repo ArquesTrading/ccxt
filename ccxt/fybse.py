@@ -7,7 +7,6 @@ from ccxt.base.exchange import Exchange
 import hashlib
 from ccxt.base.errors import ExchangeError
 
-
 class fybse(Exchange):
 
     def describe(self):

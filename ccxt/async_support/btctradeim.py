@@ -6,7 +6,6 @@
 from ccxt.async_support.coinegg import coinegg
 from ccxt.base.errors import ExchangeError
 
-
 class btctradeim(coinegg):
 
     def describe(self):

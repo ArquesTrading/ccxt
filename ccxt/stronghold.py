@@ -14,7 +14,6 @@ from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import NotSupported
 from ccxt.base.errors import InvalidNonce
 
-
 class stronghold(Exchange):
 
     def describe(self):

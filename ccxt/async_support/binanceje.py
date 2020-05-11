@@ -5,7 +5,6 @@
 
 from ccxt.async_support.binance import binance
 
-
 class binanceje(binance):
 
     def describe(self):

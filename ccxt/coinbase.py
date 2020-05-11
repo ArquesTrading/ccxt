@@ -9,7 +9,6 @@ from ccxt.base.errors import AuthenticationError
 from ccxt.base.errors import ArgumentsRequired
 from ccxt.base.errors import RateLimitExceeded
 
-
 class coinbase(Exchange):
 
     def describe(self):

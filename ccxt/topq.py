@@ -5,7 +5,6 @@
 
 from ccxt.bw import bw
 
-
 class topq(bw):
 
     def describe(self):

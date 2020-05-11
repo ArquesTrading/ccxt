@@ -7,7 +7,6 @@ from ccxt.base.exchange import Exchange
 import base64
 import hashlib
 
-
 class bl3p(Exchange):
 
     def describe(self):

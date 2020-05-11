@@ -16,7 +16,6 @@ from ccxt.base.errors import AuthenticationError
 from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import InvalidNonce
 
-
 class bitso(Exchange):
 
     def describe(self):

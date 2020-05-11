@@ -16,7 +16,6 @@ from six import PY3, int2byte, b, next
 oid_ecPublicKey = (1, 2, 840, 10045, 2, 1)
 encoded_oid_ecPublicKey = der.encode_oid(*oid_ecPublicKey)
 
-
 def randrange(order, entropy=None):
     """Return a random integer k such that 1 <= k < order, uniformly
     distributed across that range. For simplicity, this only behaves well if

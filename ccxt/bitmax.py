@@ -14,7 +14,6 @@ from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import InvalidOrder
 from ccxt.base.decimal_to_precision import ROUND
 
-
 class bitmax(Exchange):
 
     def describe(self):

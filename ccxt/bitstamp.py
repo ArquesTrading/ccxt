@@ -23,7 +23,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import NotSupported
 from ccxt.base.errors import InvalidNonce
 
-
 class bitstamp(Exchange):
 
     def describe(self):

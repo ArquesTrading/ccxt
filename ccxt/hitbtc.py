@@ -18,7 +18,6 @@ from ccxt.base.errors import RequestTimeout
 from ccxt.base.decimal_to_precision import TRUNCATE
 from ccxt.base.decimal_to_precision import DECIMAL_PLACES
 
-
 class hitbtc(Exchange):
 
     def describe(self):

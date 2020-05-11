@@ -5,7 +5,6 @@
 
 from ccxt.async_support.base.exchange import Exchange
 
-
 class vaultoro(Exchange):
 
     def describe(self):

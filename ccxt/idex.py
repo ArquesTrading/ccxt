@@ -11,7 +11,6 @@ from ccxt.base.errors import ArgumentsRequired
 from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import InvalidOrder
 
-
 class idex(Exchange):
 
     def describe(self):

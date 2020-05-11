@@ -5,7 +5,6 @@
 
 from ccxt.async_support.foxbit import foxbit
 
-
 class surbitcoin(foxbit):
 
     def describe(self):

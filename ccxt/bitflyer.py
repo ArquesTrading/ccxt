@@ -8,7 +8,6 @@ from ccxt.base.errors import ExchangeError
 from ccxt.base.errors import ArgumentsRequired
 from ccxt.base.errors import OrderNotFound
 
-
 class bitflyer(Exchange):
 
     def describe(self):

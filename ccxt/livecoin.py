@@ -18,7 +18,6 @@ from ccxt.base.errors import ExchangeNotAvailable
 from ccxt.base.decimal_to_precision import TRUNCATE
 from ccxt.base.decimal_to_precision import DECIMAL_PLACES
 
-
 class livecoin(Exchange):
 
     def describe(self):

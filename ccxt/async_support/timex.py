@@ -16,7 +16,6 @@ from ccxt.base.errors import NotSupported
 from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import ExchangeNotAvailable
 
-
 class timex(Exchange):
 
     def describe(self):

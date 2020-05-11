@@ -10,7 +10,6 @@ from ccxt.base.errors import ExchangeError
 from ccxt.base.errors import AuthenticationError
 from ccxt.base.errors import ArgumentsRequired
 
-
 class ice3x(Exchange):
 
     def describe(self):

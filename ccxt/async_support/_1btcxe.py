@@ -14,7 +14,6 @@ except NameError:
 from ccxt.base.errors import ExchangeError
 from ccxt.base.errors import ExchangeNotAvailable
 
-
 class _1btcxe(Exchange):
 
     def describe(self):

@@ -8,7 +8,6 @@ from ccxt.base.errors import ExchangeError
 from ccxt.base.errors import BadSymbol
 from ccxt.base.errors import NotSupported
 
-
 class bitstamp1(Exchange):
 
     def describe(self):

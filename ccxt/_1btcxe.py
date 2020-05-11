@@ -284,3 +284,4 @@ class _1btcxe(Exchange):
             errors = ' '.join(errors)
             raise ExchangeError(self.id + ' ' + errors)
         return response
+

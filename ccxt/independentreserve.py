@@ -5,7 +5,6 @@
 
 from ccxt.base.exchange import Exchange
 
-
 class independentreserve(Exchange):
 
     def describe(self):

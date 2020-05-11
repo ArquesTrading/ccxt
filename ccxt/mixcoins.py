@@ -7,7 +7,6 @@ from ccxt.base.exchange import Exchange
 import hashlib
 from ccxt.base.errors import ExchangeError
 
-
 class mixcoins(Exchange):
 
     def describe(self):

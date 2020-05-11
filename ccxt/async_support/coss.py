@@ -7,7 +7,6 @@ from ccxt.async_support.base.exchange import Exchange
 import math
 from ccxt.base.errors import ArgumentsRequired
 
-
 class coss(Exchange):
 
     def describe(self):

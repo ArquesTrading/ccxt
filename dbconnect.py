@@ -66,3 +66,4 @@ def insert_price(exchange_name, params):
 
 
 
+

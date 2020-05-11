@@ -13,7 +13,6 @@ from ccxt.base.errors import InsufficientFunds
 from ccxt.base.errors import InvalidOrder
 from ccxt.base.errors import OrderNotFound
 
-
 class indodax(Exchange):
 
     def describe(self):

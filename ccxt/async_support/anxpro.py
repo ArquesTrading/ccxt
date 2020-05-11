@@ -16,7 +16,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import NotSupported
 from ccxt.base.errors import ExchangeNotAvailable
 
-
 class anxpro(Exchange):
 
     def describe(self):

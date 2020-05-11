@@ -21,7 +21,6 @@ from ccxt.base.errors import OrderNotFound
 from ccxt.base.errors import DDoSProtection
 from ccxt.base.errors import InvalidNonce
 
-
 class btcbox(Exchange):
 
     def describe(self):

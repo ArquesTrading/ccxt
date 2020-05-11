@@ -21,7 +21,6 @@ from ccxt.base.errors import InvalidNonce
 from ccxt.base.decimal_to_precision import ROUND
 from ccxt.base.decimal_to_precision import TRUNCATE
 
-
 class binance(Exchange):
 
     def describe(self):

@@ -39,7 +39,6 @@ error_hierarchy = {
     },
 }
 
-
 class BaseError(Exception):
     pass
 

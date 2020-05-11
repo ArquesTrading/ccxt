@@ -9,7 +9,6 @@ from ccxt.base.errors import ExchangeError
 from ccxt.base.errors import AuthenticationError
 from ccxt.base.errors import NotSupported
 
-
 class coinspot(Exchange):
 
     def describe(self):

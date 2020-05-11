@@ -31,7 +31,6 @@ from ccxt.base.errors import InvalidNonce
 from ccxt.base.decimal_to_precision import TRUNCATE
 from ccxt.base.decimal_to_precision import DECIMAL_PLACES
 
-
 class kraken(Exchange):
 
     def describe(self):
