@@ -134,15 +134,35 @@ def main(argv):
 # -----------------------------------------------------------------------------
 
 
+def check_none_value(value):
+    if value is None:
+        value = 0
+    
+    return value
+
+
+
 def insert(exchange_name, symbol, list):
     if len(list) > 0:
         for li in list:
+            _period = '1m'
             ts = li[0]
             d = exchange.iso8601(ts)
-            li.insert(1, d)
-            li.insert(0, exchange_name)
-            li.insert(1, symbol)
-            params = (li[0], li[1], li[2], li[3], li[4], li[5], li[6], li[7], li[8])
+            # li.insert(1, d)
+            # li.insert(0, exchange_name)
+            # li.insert(1, symbol)
+            # li.insert(2, _period)
+
+            _timestamp = li[0]
+            _datetime = d            
+            _open = check_none_value(li[1])
+            _high = check_none_value(li[2])
+            _low = check_none_value(li[3])
+            _close = check_none_value(li[4])
+            _baseVolume = check_none_value(li[5])
+
+            # params = (li[0], li[1], li[2], li[3], li[4], li[5], li[6], li[7], li[8], li[9])
+            params = (exchnage_name, symbol, _period, _timestamp, _datetime, _open, _high, _low, _close, _baseVolume)
             
             # print(params)
             if li[4] is not None:

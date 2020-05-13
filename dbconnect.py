@@ -44,6 +44,7 @@ def insert_price(exchange_name, params):
     EXEC    dbo.SP_T_CRYPTO_PRICE_INFO_C
             @i_exchange_name    = ?
         ,   @i_symbol           = ?
+        ,   @i_period           = ?
         ,   @i_timestamp		= ?
         ,	@i_log_time			= ?
         ,	@i_open				= ?
@@ -62,6 +63,8 @@ def insert_price(exchange_name, params):
         row = cursor.fetchone()
 
     return row
+
+
 
 
 

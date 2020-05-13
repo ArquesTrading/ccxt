@@ -104,6 +104,7 @@ def check_none_value(value):
 
 
 def insert(exchange_name, symbol, data):
+    _period = 'tick'
     _timestamps = data["timestamp"]
     _datetime = data["datetime"]
     _open = check_none_value(data["open"])
@@ -112,7 +113,7 @@ def insert(exchange_name, symbol, data):
     _close = check_none_value(data["close"])
     _baseVolume = check_none_value(data["baseVolume"])
 
-    params = (exchange_name, symbol, _timestamps, _datetime, _open, _high, _low, _close, _baseVolume)
+    params = (exchange_name, symbol, _period, _timestamps, _datetime, _open, _high, _low, _close, _baseVolume)
     r = db.insert_price(exchange_name, params)
     #print(params, r)
     print(data["timestamp"], exchange_name, 'Ticker starting from', data["datetime"])
