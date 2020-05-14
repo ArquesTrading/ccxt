@@ -14,8 +14,10 @@ import seaborn
 import numpy as np
 from scipy.stats import norm
 
-root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.append(root + '/python')
+# root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# sys.path.append(root + '/python')
+
+root = os.path.dirname(os.path.abspath(__file__))
 
 unit = 100              # in US Dollar
 threshold = 0.002       # 0.0n refers to n%

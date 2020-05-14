@@ -1,6 +1,7 @@
 import os
 import sys, getopt
 import time
+root = os.path.dirname(os.path.abspath(__file__))
 
 import asyncio
 import ccxt
