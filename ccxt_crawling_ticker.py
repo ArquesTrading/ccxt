@@ -7,6 +7,7 @@ import ccxt
 import dbconnect as db
 import threading
 
+# ticker 를 input 받은 거래소와 input 받은 symbol 기준으로 가져와서 SQL Server 에 저장하기
 
 # -----------------------------------------------------------------------------
 # common constants
@@ -66,13 +67,13 @@ def main(argv):
         elif opt in ("-s", "--symbol"): # 시작일자 입력인 경우
             symbol = arg
 
-    # if len(exchange_name) < 1: # 필수항목 값이 비어있다면
-    #     print(FILE_NAME, "-e 거래소명은 반드시 입력 바랍니다. ( bitmex, coinbase )") # 필수임을 출력
-    #     sys.exit(2)
+    if len(exchange_name) < 1: # 필수항목 값이 비어있다면
+        print(FILE_NAME, "-e 거래소명은 반드시 입력 바랍니다. ( bitmex, coinbase )") # 필수임을 출력
+        sys.exit(2)
 
-    # if len(symbol) < 1:
-    #     print(FILE_NAME, "-s 심볼은 반드시 입력 바랍니다. (BTC/USD, ... )") # 필수임을 출력
-    #     sys.exit(2)
+    if len(symbol) < 1:
+        print(FILE_NAME, "-s 심볼은 반드시 입력 바랍니다. (BTC/USD, ... )") # 필수임을 출력
+        sys.exit(2)
 
     #exchange_name = 'coinbase'
     #symbol = 'BTC/USD'
@@ -90,8 +91,7 @@ def crawling(exchange_name, symbol):
     exchange = get_exchange(exchange_name)    
     ticker = exchange.fetch_ticker(symbol)
     
-    #print(exchange.name)
-    #print(ticker)
+    # 가져온 ticker 를 Sql Server 에 저장하기
     insert(exchange_name, symbol, ticker)
 
 def check_none_value(value):
@@ -115,8 +115,8 @@ def insert(exchange_name, symbol, data):
     _baseVolume = check_none_value(data["baseVolume"])
 
     params = (exchange_name, symbol, _period, _timestamps, _datetime, _open, _high, _low, _close, _baseVolume)
-    r = db.insert_price(exchange_name, params)
-    #print(params, r)
+    db.insert_price(exchange_name, params)
+    
     print(data["timestamp"], exchange_name, 'Ticker starting from', data["datetime"])
 
 

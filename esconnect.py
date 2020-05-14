@@ -15,26 +15,31 @@ def connect():
 
 def make_index(es, index_name):
     if es.indices.exists(index=index_name):
-        es.indices.delte(index=index_name)
+        es.indices.delete(index=index_name)
     print(es.indices.create(index=index_name))
 
 
-index_name = 'test'
-make_index(es, index_name)
+index_name = 'crypto_price_info'
+# index_name = 'test'
+# make_index(es, index_name)
 
 
-# 데이터를 저장한다
-doc1 = {'goods_name': '삼성 노트북 9',    'price': 1000000}
-doc2 = {'goods_name': '엘지 노트북 그램', 'price': 2000000}
-doc3 = {'goods_name': '애플 맥북 프로',   'price': 3000000}
-es.index(index=index_name, doc_type='string', body=doc1)
-es.index(index=index_name, doc_type='string', body=doc2)
-es.index(index=index_name, doc_type='string', body=doc3)
-es.indices.refresh(index=index_name)
+# # 데이터를 저장한다
+# doc1 = {'goods_name': '삼성 노트북 91',    'price': 10000001}
+# doc2 = {'goods_name': '엘지 노트북 그램1', 'price': 20000001}
+# doc3 = {'goods_name': '애플 맥북 프로1',   'price': 30000001}
+# es.index(index=index_name, doc_type='string', body=doc1)
+# es.index(index=index_name, doc_type='string', body=doc2)
+# es.index(index=index_name, doc_type='string', body=doc3)
+# es.indices.refresh(index=index_name)
 
-# 상품명에 '노트북'을 검색한다
-results = es.search(index=index_name, body={'from':0, 'size':10, 'query':{'match':{'goods_name':'노트북'}}})
-for result in results['hits']['hits']:
-    print('score:', result['_score'], 'source:', result['_source'])
+# 상품명에 '노트북'을 검색한다S
+results = es.search(index=index_name, body={'from':0, 'size':10, 'query':{'match': {'exchange_name':'bitmex'}}})
+print(results)
+
+
+# results = es.search(index=index_name, body={'from':0, 'size':10, 'query':{'match':{'goods_name':'노트북'}}})
+# for result in results['hits']['hits']:
+#     print('score:', result['_score'], 'source:', result['_source'])
 
 
