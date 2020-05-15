@@ -125,6 +125,7 @@ from ccxt.async_support.gemini import gemini                              # noqa
 from ccxt.async_support.hitbtc import hitbtc                              # noqa: F401
 from ccxt.async_support.hollaex import hollaex                            # noqa: F401
 from ccxt.async_support.huobipro import huobipro                          # noqa: F401
+from ccxt.async_support.huobiswap import huobiswap
 from ccxt.async_support.huobiru import huobiru                            # noqa: F401
 from ccxt.async_support.ice3x import ice3x                                # noqa: F401
 from ccxt.async_support.idex import idex                                  # noqa: F401
@@ -246,6 +247,7 @@ exchanges = [
     'hitbtc',
     'hollaex',
     'huobipro',
+    'huobiswap',
     'huobiru',
     'ice3x',
     'idex',
