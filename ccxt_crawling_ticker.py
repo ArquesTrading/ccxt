@@ -29,6 +29,7 @@ from_timestamp = time.time()
 
 exchange_name = ""
 symbol = ""
+threadtimesecond = 5
 from_datetime = ""
 
 # -----------------------------------------------------------------------------
@@ -36,6 +37,9 @@ from_datetime = ""
 def get_exchange(id):
     if id == 'coinbase':
         id = 'coinbasepro'
+
+    if id == 'huobi':
+        id = 'huobiswap'
       
     exchange = getattr(ccxt, id)({
         'rateLimit': 3000,
@@ -50,15 +54,15 @@ def main(argv):
 
     try:
         opts, etc_args = getopt.getopt(argv[1:], \
-                                 "he:s:", ["help","exchange_name=","symbol="])
+                                 "he:s:t:", ["help","exchange_name=","symbol=","threadtime="])
     
     except getopt.GetoptError: # 옵션지정이 올바르지 않은 경우
-        print(FILE_NAME, '-e <exchange name> -s <symbol>')
+        print(FILE_NAME, '-e <exchange name> -s <symbol> -t <threadtime>')
         sys.exit(2)
 
     for opt, arg in opts: # 옵션이 파싱된 경우
         if opt in ("-h", "--help"): # HELP 요청인 경우 사용법 출력
-            print(FILE_NAME, '-e <exchange name> -s <symbol>')
+            print(FILE_NAME, '-e <exchange name> -s <symbol> -t <threadtime>')
             sys.exit()
 
         elif opt in ("-e", "--exchange"): # 거래소 명 입력인 경우
@@ -66,6 +70,8 @@ def main(argv):
 
         elif opt in ("-s", "--symbol"): # 시작일자 입력인 경우
             symbol = arg
+        elif opt in ("-t", "--threadtime"): # thread 초 단위
+            threadtimesecond = int(arg)
 
     if len(exchange_name) < 1: # 필수항목 값이 비어있다면
         print(FILE_NAME, "-e 거래소명은 반드시 입력 바랍니다. ( bitmex, coinbase )") # 필수임을 출력
@@ -75,18 +81,22 @@ def main(argv):
         print(FILE_NAME, "-s 심볼은 반드시 입력 바랍니다. (BTC/USD, ... )") # 필수임을 출력
         sys.exit(2)
 
-    #exchange_name = 'coinbase'
-    #symbol = 'BTC/USD'
+    # exchange_name = 'coinbase'
+    # symbol = 'BTC/USD'
+    # threadtimesecond = 1
+
+    if exchange_name == 'huobi':
+        symbol = symbol.replace('/','-')
     
     # 여기서 부터 시작
     print('gogo')
 
-    crawling(exchange_name, symbol)
+    crawling(exchange_name, symbol, threadtimesecond)
 
 
 
-def crawling(exchange_name, symbol):    
-    threading.Timer(5.0, crawling, [exchange_name, symbol]).start()
+def crawling(exchange_name, symbol, threadtimesecond):    
+    threading.Timer(threadtimesecond, crawling, [exchange_name, symbol, threadtimesecond]).start()
 
     exchange = get_exchange(exchange_name)    
     ticker = exchange.fetch_ticker(symbol)

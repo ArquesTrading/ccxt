@@ -66,10 +66,10 @@ class huobiswap(Exchange):
                 },
                 'logo': 'https://user-images.githubusercontent.com/1294454/76137448-22748a80-604e-11ea-8069-6e389271911d.jpg',
                 'api': {
-                    'market': 'https://{hostname}/swap-ex/market',
+                    'market': 'https://{hostname}/swap-ex',
                     'public': 'https://{hostname}/swap-api',
                     'private': 'https://{hostname}',
-                    'v2Public': 'https://{hostname}/swap-ex/market',
+                    'v2Public': 'https://{hostname}/swap-ex',
                     'v2Private': 'https://{hostname}',
                 },
                 'www': 'https://www.huobi.com',
@@ -90,22 +90,23 @@ class huobiswap(Exchange):
                 'public': {
                     'get': [
                         'kline',
-                        'swap_contract_info'
-                        # 'swap-api/v1/swap_contract_info',    #Query Swap Info
-                        # 'swap-api/v1/swap_index',
-                        # 'swap-api/v1/swap_price_limit',
-                        # 'swap-api/v1/swap_open_interest',
-                        
-                        # 'swap-api/v1/swap_risk_info',
-                        # 'swap-api/v1/swap_insurance_fund',
-                        # 'swap-api/v1/swap_adjustfactor',
-                        # 'swap-api/v1/swap_his_open_interest',
-                        # 'swap-api/v1/swap_api_state',
-                        # 'swap-api/v1/swap_elite_account_ratio',
-                        # 'swap-api/v1/swap_elite_position_ratio',
-                        # 'swap-api/v1/swap_liquidation_orders',
-                        # 'swap-api/v1/swap_funding_rate',
-                        # 'swap-api/v1/swap_historical_funding_rate',                        
+                        'swap_contract_info',
+                        'swap_index',
+                        'swap_price_limit',
+                        'swap_open_interest',
+                        'swap_risk_info',
+                        'swap_insurance_fund',
+                        'swau_adjustfactor',
+                        'swap_insurance_fund',
+                        'swap_adjustfactor',
+                        'swap_his_open_interest',
+                        'swap_api_state',
+                        'swap_elite_account_ratio',
+                        'swap_elite_position_ratio',
+                        'swap_liquidation_orders',
+                        'swap_funding_rate',
+                        'swap_historical_funding_rate',
+                                    
                     ]
                 },
                 'private':{
@@ -113,29 +114,29 @@ class huobiswap(Exchange):
 
                     ],
                     'post': [
-                        'swap-api/v1/swap_account_info',
-                        'swap-api/v1/swap_position_info',
-                        'swap-api/v1/swap_sub_account_list',
-                        'swap-api/v1/swap_sub_account_info',
-                        'swap-api/v1/swap_sub_position_info',
-                        'swap-api/v1/swap_financial_record',
-                        'swap-api/v1/swap_order_limit',
-                        'swap-api/v1/swap_fee',
-                        'swap-api/v1/swap_transfer_limit',
-                        'swap-api/v1/swap_position_limit',
-                        'swap-api/v1/swap_master_sub_transfer',
-                        'swap-api/v1/swap_master_sub_transfer_record',
-                        'swap-api/v1/swap_api_trading_status',
-                        'swap-api/v1/swap_order',
-                        'swap-api/v1/swap_batchorder',
-                        'swap-api/v1/swap_cancel',
-                        'swap-api/v1/swap_cancelall',
-                        'swap-api/v1/swap_lightning_close_position',
-                        'swap-api/v1/swap_order_info',
-                        'swap-api/v1/swap_order_detail',
-                        'swap-api/v1/swap_openorders',
-                        'swap-api/v1/swap_hisorders',
-                        'swap-api/v1/swap_matchresults',
+                        'swap_account_info',
+                        'swap_position_info',
+                        'swap_sub_account_list',
+                        'swap_sub_account_info',
+                        'swap_sub_position_info',
+                        'swap_financial_record',
+                        'swap_order_limit',
+                        'swap_fee',
+                        'swap_transfer_limit',
+                        'swap_position_limit',
+                        'swap_master_sub_transfer',
+                        'swap_master_sub_transfer_record',
+                        'swap_api_trading_status',
+                        'swap_order',
+                        'swap_batchorder',
+                        'swap_cancel',
+                        'swap_cancelall',
+                        'swap_lightning_close_position',
+                        'swap_order_info',
+                        'swap_order_detail',
+                        'swap_openorders',
+                        'swap_hisorders',
+                        'swap_matchresults',
 
                     ]
                 }
@@ -256,33 +257,34 @@ class huobiswap(Exchange):
             },
         }
 
+
     def fetch_markets(self, params={}):
-        method = self.options['fetchMarketsMethod']
-        response = getattr(self, method)(params)
-        markets = self.safe_value(response, 'data')
-        numMarkets = len(markets)
-        if numMarkets < 1:
-            raise ExchangeError(self.id + ' publicGetCommonSymbols returned empty response: ' + self.json(markets))
+        response = self.publicGetSwapIndex(params)
         result = []
+
+        markets = response['data']
+
+        
         for i in range(0, len(markets)):
             market = markets[i]
-            baseId = self.safe_string(market, 'base-currency')
-            quoteId = self.safe_string(market, 'quote-currency')
-            id = baseId + quoteId
-            base = self.safe_currency_code(baseId)
-            quote = self.safe_currency_code(quoteId)
-            symbol = base + '/' + quote
-            precision = {
-                'amount': market['amount-precision'],
-                'price': market['price-precision'],
-            }
-            maker = 0 if (base == 'OMG') else 0.2 / 100
-            taker = 0 if (base == 'OMG') else 0.2 / 100
-            minAmount = self.safe_float(market, 'min-order-amt', math.pow(10, -precision['amount']))
-            maxAmount = self.safe_float(market, 'max-order-amt')
-            minCost = self.safe_float(market, 'min-order-value', 0)
-            state = self.safe_string(market, 'state')
-            active = (state == 'online')
+
+            name = self.safe_string(market, 'contract_code')
+            base, quote = name.split('-')
+            baseId = base.lower()
+            quoteId = quote.lower()
+            base = self.safe_currency_code(base)
+            quote = self.safe_currency_code(quote)
+            id = self.safe_string(market, 'contract_code')
+
+            symbol = name
+            open = None
+            high = None
+            low = None
+
+            close = market["index_price"]
+
+            timestamp = market["index_ts"]
+
             result.append({
                 'id': id,
                 'symbol': symbol,
@@ -290,25 +292,9 @@ class huobiswap(Exchange):
                 'quote': quote,
                 'baseId': baseId,
                 'quoteId': quoteId,
-                'active': active,
-                'precision': precision,
-                'taker': taker,
-                'maker': maker,
-                'limits': {
-                    'amount': {
-                        'min': minAmount,
-                        'max': maxAmount,
-                    },
-                    'price': {
-                        'min': math.pow(10, -precision['price']),
-                        'max': None,
-                    },
-                    'cost': {
-                        'min': minCost,
-                        'max': None,
-                    },
-                },
+                
                 'info': market,
+                
             })
         return result
 
@@ -386,7 +372,7 @@ class huobiswap(Exchange):
         self.load_markets()
         market = self.market(symbol)
         request = {
-            'symbol': market['id'],
+            'contract_code': market['id'],
             'type': 'step0',
         }
         response = self.marketGetDepth(self.extend(request, params))
@@ -425,7 +411,7 @@ class huobiswap(Exchange):
         self.load_markets()
         market = self.market(symbol)
         request = {
-            'symbol': market['id'],
+            'contract_code': market['id'],
         }
         response = self.marketGetDetailMerged(self.extend(request, params))
         #
@@ -615,10 +601,22 @@ class huobiswap(Exchange):
         market = self.market(symbol)
         request = {
             'contract_code': market['id'],
-            'period': self.timeframes[timeframe],
+            'period': timeframe,
         }
         if limit is not None:
             request['size'] = limit
+
+        _timeframe = '1m'
+        duration = self.parse_timeframe(_timeframe) * 1000
+        fetchOHLCVOpenTimestamp = self.safe_value(self.options, 'fetchOHLCVOpenTimestamp', True)
+        # if since is not set, they will return candles starting from 2017-01-01
+        if since is not None:
+            timestamp = since
+            if fetchOHLCVOpenTimestamp:
+                timestamp = self.sum(timestamp, duration)
+            ymdhms = self.ymdhms(timestamp)
+            request['from'] = ymdhms  # starting date filter for results
+
         response = self.marketGetHistoryKline(self.extend(request, params))
         return self.parse_ohlcvs(response['data'], market, timeframe, since, limit)
 
@@ -627,89 +625,89 @@ class huobiswap(Exchange):
         response = self.privateGetAccountAccounts(params)
         return response['data']
 
-    def fetch_currencies(self, params={}):
-        request = {
-            'language': self.options['language'],
-        }
-        #response = self.publicGetSettingsCurrencys(self.extend(request, params))
-        response = self.publicGetSwapContractInfo(self.extend(request, params))
-        currencies = self.safe_value(response, 'data')
-        result = {}
-        for i in range(0, len(currencies)):
-            currency = currencies[i]
-            #
-            #  {                    name: "ctxc",
-            #              'display-name': "CTXC",
-            #        'withdraw-precision':  8,
-            #             'currency-type': "eth",
-            #        'currency-partition': "pro",
-            #             'support-sites':  null,
-            #                'otc-enable':  0,
-            #        'deposit-min-amount': "2",
-            #       'withdraw-min-amount': "4",
-            #            'show-precision': "8",
-            #                      weight: "2988",
-            #                     visible:  True,
-            #              'deposit-desc': "Please don’t deposit any other digital assets except CTXC t…",
-            #             'withdraw-desc': "Minimum withdrawal amount: 4 CTXC. not >_<not For security reason…",
-            #           'deposit-enabled':  True,
-            #          'withdraw-enabled':  True,
-            #    'currency-addr-with-tag':  False,
-            #             'fast-confirms':  15,
-            #             'safe-confirms':  30                                                             }
-            #
-            # {
-            #                         'symbol': "BTC",
-            #                  'contract_code': "BTC-USD",
-            #                  "contract_size":100.000000000000000000,
-            #                     "price_tick":0.100000000000000000,
-            #                    "create_date":"20200325",
-            #                "contract_status":1,
-            #                "settlement_date":"1588939200000"
-            # }
+    # def fetch_currencies(self, params={}):
+    #     request = {
+    #         'language': self.options['language'],
+    #     }
+    #     #response = self.publicGetSettingsCurrencys(self.extend(request, params))
+    #     response = self.publicGetSwapContractInfo(self.extend(request, params))
+    #     currencies = self.safe_value(response, 'data')
+    #     result = {}
+    #     for i in range(0, len(currencies)):
+    #         currency = currencies[i]
+    #         #
+    #         #  {                    name: "ctxc",
+    #         #              'display-name': "CTXC",
+    #         #        'withdraw-precision':  8,
+    #         #             'currency-type': "eth",
+    #         #        'currency-partition': "pro",
+    #         #             'support-sites':  null,
+    #         #                'otc-enable':  0,
+    #         #        'deposit-min-amount': "2",
+    #         #       'withdraw-min-amount': "4",
+    #         #            'show-precision': "8",
+    #         #                      weight: "2988",
+    #         #                     visible:  True,
+    #         #              'deposit-desc': "Please don’t deposit any other digital assets except CTXC t…",
+    #         #             'withdraw-desc': "Minimum withdrawal amount: 4 CTXC. not >_<not For security reason…",
+    #         #           'deposit-enabled':  True,
+    #         #          'withdraw-enabled':  True,
+    #         #    'currency-addr-with-tag':  False,
+    #         #             'fast-confirms':  15,
+    #         #             'safe-confirms':  30                                                             }
+    #         #
+    #         # {
+    #         #                         'symbol': "BTC",
+    #         #                  'contract_code': "BTC-USD",
+    #         #                  "contract_size":100.000000000000000000,
+    #         #                     "price_tick":0.100000000000000000,
+    #         #                    "create_date":"20200325",
+    #         #                "contract_status":1,
+    #         #                "settlement_date":"1588939200000"
+    #         # }
 
 
-            id = self.safe_value(currency, 'name')
-            precision = self.safe_integer(currency, 'withdraw-precision')
-            code = self.safe_currency_code(id)
-            active = currency['visible'] and currency['deposit-enabled'] and currency['withdraw-enabled']
-            name = self.safe_string(currency, 'display-name')
-            result[code] = {
-                'id': id,
-                'code': code,
-                'type': 'crypto',
-                # 'payin': currency['deposit-enabled'],
-                # 'payout': currency['withdraw-enabled'],
-                # 'transfer': None,
-                'name': name,
-                'active': active,
-                'fee': None,  # todo need to fetch from fee endpoint
-                'precision': precision,
-                'limits': {
-                    'amount': {
-                        'min': math.pow(10, -precision),
-                        'max': math.pow(10, precision),
-                    },
-                    'price': {
-                        'min': math.pow(10, -precision),
-                        'max': math.pow(10, precision),
-                    },
-                    'cost': {
-                        'min': None,
-                        'max': None,
-                    },
-                    'deposit': {
-                        'min': self.safe_float(currency, 'deposit-min-amount'),
-                        'max': math.pow(10, precision),
-                    },
-                    'withdraw': {
-                        'min': self.safe_float(currency, 'withdraw-min-amount'),
-                        'max': math.pow(10, precision),
-                    },
-                },
-                'info': currency,
-            }
-        return result
+    #         id = self.safe_value(currency, 'name')
+    #         precision = self.safe_integer(currency, 'withdraw-precision')
+    #         code = self.safe_currency_code(id)
+    #         active = currency['visible'] and currency['deposit-enabled'] and currency['withdraw-enabled']
+    #         name = self.safe_string(currency, 'display-name')
+    #         result[code] = {
+    #             'id': id,
+    #             'code': code,
+    #             'type': 'crypto',
+    #             # 'payin': currency['deposit-enabled'],
+    #             # 'payout': currency['withdraw-enabled'],
+    #             # 'transfer': None,
+    #             'name': name,
+    #             'active': active,
+    #             'fee': None,  # todo need to fetch from fee endpoint
+    #             'precision': precision,
+    #             'limits': {
+    #                 'amount': {
+    #                     'min': math.pow(10, -precision),
+    #                     'max': math.pow(10, precision),
+    #                 },
+    #                 'price': {
+    #                     'min': math.pow(10, -precision),
+    #                     'max': math.pow(10, precision),
+    #                 },
+    #                 'cost': {
+    #                     'min': None,
+    #                     'max': None,
+    #                 },
+    #                 'deposit': {
+    #                     'min': self.safe_float(currency, 'deposit-min-amount'),
+    #                     'max': math.pow(10, precision),
+    #                 },
+    #                 'withdraw': {
+    #                     'min': self.safe_float(currency, 'withdraw-min-amount'),
+    #                     'max': math.pow(10, precision),
+    #                 },
+    #             },
+    #             'info': currency,
+    #         }
+    #     return result
 
     def fetch_balance(self, params={}):
         self.load_markets()

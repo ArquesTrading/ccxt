@@ -34,7 +34,10 @@ from_datetime = ""
 def get_exchange(id):
     if id == 'coinbase':
         id = 'coinbasepro'
-        
+    
+    if id == 'huobi':
+        id = 'huobiswap'
+      
     exchange = getattr(ccxt, id)({
         'rateLimit': 3000,
         'enableRateLimit' : True,
@@ -83,6 +86,11 @@ def main(argv):
     exchange = get_exchange(exchange_name)
     symbol = 'BTC/USD'
 
+    
+    if exchange_name == 'huobi':
+        symbol = symbol.replace('/','-')
+    
+
     if exchange_name == 'bitmex':
         # exchange = ccxt.bitmex({
         #     'rateLimit': 3000,
@@ -98,6 +106,8 @@ def main(argv):
         # })
         # symbol = 'BTC/USD'
         unit = 300
+    else:
+        unit = 500
 
     from_timestamp = exchange.parse8601(from_datetime)
     now = exchange.milliseconds()
@@ -106,13 +116,17 @@ def main(argv):
     print(symbol)
     print(from_timestamp)
     print(now)
+
+    period = '1m'
+    if exchange_name == 'huobi':
+        period = '1min'
         
     while from_timestamp < now:
 
         try:
 
             print(exchange.milliseconds(), exchange.name, 'Fetching candles starting from', exchange.iso8601(from_timestamp))
-            ohlcvs = exchange.fetch_ohlcv(symbol, '1m', from_timestamp, unit)
+            ohlcvs = exchange.fetch_ohlcv(symbol, period, from_timestamp, unit)
             print(exchange.milliseconds(), exchange.name, 'Fetched', len(ohlcvs), 'candles')
             from_timestamp = ohlcvs[-1][0]
             if len(ohlcvs) > 1:

@@ -1,9 +1,9 @@
 import  pyodbc
 
-server = 'insudb.database.windows.net'
-database = 'Insu'
-username = 'violet2733'
-password = '!IS1q2w3ems'
+server = 'arquestrade.database.windows.net'
+database = 'ArquesTradingDB'
+username = 'arques_admin'
+password = 'Password!1234'
 driver = '{ODBC Driver 17 for SQL Server}'
 #cnxn = pyodbc.connect('DRIVER=' + driver + ';SERVER=' + server + ';PORT=1433;DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';')
 
