@@ -34,7 +34,29 @@ index_name = 'crypto_price_info'
 # es.indices.refresh(index=index_name)
 
 # 상품명에 '노트북'을 검색한다S
-results = es.search(index=index_name, body={'from':0, 'size':10, 'query':{'match': {'exchange_name':'bitmex'}}})
+results = es.search(index=index_name, body={'from':0, 'size':10, "query": {
+    "bool": {
+      "must": [
+        {
+          "datetime": {
+            "date": {
+              "gte": "2020-05-18",
+              "lte": "2020-05-19"
+            }
+          }
+        },
+        {
+          "datetime": {
+            "time": {
+              "gte": "08:00:00",
+              "lte": "24:00:00"
+            }
+          }
+        }
+      ]
+    }
+  }
+  })
 print(results)
 
 

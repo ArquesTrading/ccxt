@@ -64,6 +64,30 @@ def insert_price(exchange_name, params):
 
     return row
 
+def insert_order_book(params):
+    query = """\
+    DECLARE @v_sp_rtn   INT
+
+    EXEC    dbo.SP_T_CRYPTO_ORDER_BOOK_INFO_C
+            @i_exchange_name    = ?
+        ,   @i_symbol           = ?        
+        ,   @i_timestamp		= ?
+        ,	@i_log_time			= ?
+        ,   @i_kind             = ?
+        ,   @i_idx              = ?
+        ,	@i_price			= ?
+        ,	@i_volume			= ?
+        ,   @o_sp_rtn           = @v_sp_rtn OUTPUT;
+
+    SELECT  @v_sp_rtn as out
+   
+    """
+    with connect() as cnxn:
+        cursor = cnxn.cursor()
+        cursor.execute(query, params)        
+        row = cursor.fetchone()
+
+    return row
 
 
 
