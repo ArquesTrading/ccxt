@@ -59,10 +59,13 @@ async def multi_ticker():
         input_tickers = [async_client(exchange_name, symbol) for exchange_name in exchanges]
         tickers = await asyncio.gather(*input_tickers, return_exceptions=True)
 
+        loop = asyncio.get_event_loop()
+        loop.create_task(insert(tickers))
+
         # print(tickers)
         # print('aaa')
         # await asyncio.sleep(1)
-        await insert(tickers)
+        # await insert(tickers)
 
 
 async def insert(data):
@@ -98,7 +101,7 @@ async def insert(data):
     print(t, 'Ticker starting from', data)
 
 
-    await asyncio.sleep(3)
+    # await asyncio.sleep(3)
 
 
 
