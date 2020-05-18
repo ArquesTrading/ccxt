@@ -98,7 +98,8 @@ async def insert(data):
 
 
     t = time.time()
-    print(t, 'Ticker starting from', data)
+    print(t, 'Ticker ok')
+    
 
 
     # await asyncio.sleep(3)
