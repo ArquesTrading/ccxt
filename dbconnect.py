@@ -89,6 +89,28 @@ def insert_order_book(params):
 
     return row
 
+def insert_trading_log(params):
+    query = """\
+    DECLARE @v_sp_rtn   INT
+
+    EXEC    dbo.SP_T_CRYPTO_TRADING_LOG_C
+            @i_timestamp			= ?
+        ,	@i_trading_name			= ?
+        ,	@i_index				= ?
+        ,	@i_ratio1				= ?
+        ,	@i_ratio2				= ?
+        ,	@i_comment				= ?
+        ,	@i_order_description	= ?
+        ,	@o_sp_rtn				= @v_sp_rtn OUTPUT;
+
+    SELECT  @v_sp_rtn as out
+    """
+    with connect() as cnxn:
+        cursor = cnxn.cursor()
+        cursor.execute(query, params)        
+        row = cursor.fetchone()
+
+    return row
 
 
 

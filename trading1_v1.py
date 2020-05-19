@@ -98,7 +98,7 @@ while True:
         if ratio1 > 1 + threshold:
             # Bitmex open short / Bitstamp buy
             if bitstamp.fetch_balance['info']['usd_available'] > unit * 2:
-                bitmex.create_order(symbol='BTC/USD', type='market', side='sell', amount=unit, price=None)
+                bitmex.create_order(symbol='BTC/USD', type='market', side='sell', amount=unit, price=None, parms={'execInst':'ParticipateDoNotInitiate'})
                 bitstamp.create_order(symbol='BTC/USD', type='market', side='buy', amount=unit_satoshi, price=None)
                 # if bitmex position == short → index = 1
                 # if bitmex position == long → index = 2

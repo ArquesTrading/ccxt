@@ -1106,6 +1106,12 @@ class bitmex(Exchange):
         #
         return self.parse_trades(response, market, since, limit)
 
+    def fetch_position(self, params={}):
+        self.load_markets()
+        response = self.privateGetPosition()
+        return response
+
+
     def create_order(self, symbol, type, side, amount, price=None, params={}):
         self.load_markets()
         request = {
