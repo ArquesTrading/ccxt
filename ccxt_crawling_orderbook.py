@@ -6,6 +6,7 @@ root = os.path.dirname(os.path.abspath(__file__))
 import ccxt
 import dbconnect as db
 import threading
+import mongoconnect as mongo
 
 # orderbook 를 input 받은 거래소와 input 받은 symbol 기준으로 가져와서 SQL Server 에 저장하기
 
@@ -112,12 +113,22 @@ def check_none_value(value):
 
 
 def insert(exchange_name, symbol, timestamp, nowtime, data):
+
     bids = data["bids"]
     asks = data["asks"]
 
+    _data = {}
+    _data["exchange"] = exchange_name
+    _data["symbol"] = symbol
+    _data["timestamp"] = timestamp
+    _data["nowtime"] = nowtime
+    _data["bids"] = bids
+    _data["asks"] = asks
+
+    mongo.insert('crypto', 'crypto_order_book', _data)
 
     # bids 저장
-    for i in range(20):
+    for i in range(len(data)):
         _price = check_none_value(bids[i][0])
         _volume = check_none_value(bids[i][1])
 
@@ -125,7 +136,7 @@ def insert(exchange_name, symbol, timestamp, nowtime, data):
         db.insert_order_book(params)
     
     # asks 저장
-    for i in range(20):
+    for i in range(len(data)):
         _price = check_none_value(asks[i][0])
         _volume = check_none_value(asks[i][1])
 

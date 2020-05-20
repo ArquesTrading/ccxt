@@ -6,6 +6,7 @@ root = os.path.dirname(os.path.abspath(__file__))
 import ccxt
 import dbconnect as db
 import threading
+import mongoconnect as mongo
 
 # ticker 를 input 받은 거래소와 input 받은 symbol 기준으로 가져와서 SQL Server 에 저장하기
 
@@ -126,6 +127,20 @@ def insert(exchange_name, symbol, data):
 
     params = (exchange_name, symbol, _period, _timestamps, _datetime, _open, _high, _low, _close, _baseVolume)
     db.insert_price(exchange_name, params)
+
+    _data = {}    
+    _data["exchange_name"] = exchange_name
+    _data["symbol"] = symbol
+    _data["timestamp"] = _timestamps
+    _data["datetime"] = _datetime
+    _data["period"] = _period
+    _data["open"] = _open
+    _data["high"] = _high
+    _data["low"] = _low
+    _data["close"] = _close
+    _data["volume"] = _baseVolume    
+
+    mongo.insert('crypto', 'crypto_price', _data)
     
     print(data["timestamp"], exchange_name, 'Ticker starting from', data["datetime"])
 
