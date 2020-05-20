@@ -117,15 +117,15 @@ def insert(exchange_name, symbol, timestamp, nowtime, data):
     bids = data["bids"]
     asks = data["asks"]
 
-    _data = {}
-    _data["exchange"] = exchange_name
-    _data["symbol"] = symbol
-    _data["timestamp"] = timestamp
-    _data["nowtime"] = nowtime
-    _data["bids"] = bids
-    _data["asks"] = asks
+    # _data = {}
+    # _data["exchange"] = exchange_name
+    # _data["symbol"] = symbol
+    # _data["timestamp"] = timestamp
+    # _data["nowtime"] = nowtime
+    # _data["bids"] = bids
+    # _data["asks"] = asks
 
-    mongo.insert('crypto', 'crypto_order_book', _data)
+    # mongo.insert('crypto', 'crypto_order_book', _data)
 
     # bids 저장
     for i in range(20):
