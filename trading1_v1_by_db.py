@@ -128,7 +128,7 @@ def trading():
         if index == 0:
             if ratio1 > 1 + threshold:
                 # print(index, ratio1, 1 + threshold, 'Bitmex open short / Bitstamp buy')
-                order_comment = 'bitmex sell : ' + unit + ', bitstamp buy : ' + unit_satoshi
+                order_comment = 'bitmex sell : ' + str(unit) + ', bitstamp buy : ' + str(unit_satoshi)
                 params = (timestamp, 'trading_v1', index, ratio1, ratio2, 'Bitmex open short / Bitstamp buy', order_comment)
                 db.insert_trading_log(params)
                 index = 1
@@ -151,7 +151,7 @@ def trading():
                 #     pass
             elif ratio2 > 1 + threshold:
                 # print(index, ratio2, 1 + threshold, 'Bitmex open long / Bitstamp sell')
-                order_comment = 'bitmex buy : ' + unit + ', bitstamp sell : ' + unit_satoshi
+                order_comment = 'bitmex buy : ' + str(unit) + ', bitstamp sell : ' + str(unit_satoshi)
                 params = (timestamp, 'trading_v1', index, ratio1, ratio2, 'Bitmex open long / Bitstamp sell', order_comment)
                 db.insert_trading_log(params)
                 index = 2
@@ -173,7 +173,7 @@ def trading():
         elif index == 1:
             if ratio1 > 1 + threshold:
                 # print(index, ratio1, 1 + threshold, 'Bitmex open short / Bitstamp buy')
-                order_comment = 'bitmex sell : ' + unit + ', bitstamp buy : ' + unit_satoshi
+                order_comment = 'bitmex sell : ' + str(unit) + ', bitstamp buy : ' + str(unit_satoshi)
                 params = (timestamp, 'trading_v1', index, ratio1, ratio2, 'Bitmex open short / Bitstamp buy', order_comment)
                 db.insert_trading_log(params)
                 index = 1
@@ -188,7 +188,7 @@ def trading():
                 #     pass
             elif ratio1 < 1:
                 # print(index, ratio1, 1, 'Bitmex close short / Bitstamp sell')
-                order_comment = 'bitmex buy : ' + unit + ', bitstamp sell : ' + unit_satoshi
+                order_comment = 'bitmex buy : ' + str(unit) + ', bitstamp sell : ' + str(unit_satoshi)
                 params = (timestamp, 'trading_v1', index, ratio1, ratio2, 'Bitmex close short / Bitstamp sell', order_comment)
                 db.insert_trading_log(params)
                 index = 0
@@ -206,7 +206,7 @@ def trading():
         elif index == 2:
             if ratio2 > 1 + threshold:
                 # print(index, ratio2, 1 + threshold, 'Bitmex open long / Bitstamp sell')
-                order_comment = 'bitmex buy : ' + unit + ', bitstamp sell : ' + unit_satoshi
+                order_comment = 'bitmex buy : ' + str(unit) + ', bitstamp sell : ' + str(unit_satoshi)
                 params = (timestamp, 'trading_v1', index, ratio1, ratio2, 'Bitmex open long / Bitstamp sell', order_comment)
                 db.insert_trading_log(params)
                 index = 2
@@ -221,7 +221,7 @@ def trading():
                 #     pass
             elif ratio2 < 1:
                 # print(index, ratio2, 1, 'Bitmex close long / Bitstamp buy')
-                order_comment = 'bitmex sell : ' + unit + ', bitstamp buy : ' + unit_satoshi
+                order_comment = 'bitmex sell : ' + str(unit) + ', bitstamp buy : ' + str(unit_satoshi)
                 params = (timestamp, 'trading_v1', index, ratio1, ratio2, 'Bitmex close long / Bitstamp buy', order_comment)
                 db.insert_trading_log(params)
                 index = 0
