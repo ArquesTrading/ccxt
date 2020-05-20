@@ -128,7 +128,7 @@ def insert(exchange_name, symbol, timestamp, nowtime, data):
     mongo.insert('crypto', 'crypto_order_book', _data)
 
     # bids 저장
-    for i in range(len(data)):
+    for i in range(20):
         _price = check_none_value(bids[i][0])
         _volume = check_none_value(bids[i][1])
 
@@ -136,7 +136,7 @@ def insert(exchange_name, symbol, timestamp, nowtime, data):
         db.insert_order_book(params)
     
     # asks 저장
-    for i in range(len(data)):
+    for i in range(20):
         _price = check_none_value(asks[i][0])
         _volume = check_none_value(asks[i][1])
 
