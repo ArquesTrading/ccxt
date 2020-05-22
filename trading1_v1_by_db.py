@@ -23,11 +23,12 @@ step = 8
 for_timestamp = 1589796068930   # 테스트 시작 timestamp
 for_datetime = '2020-05-18'     # for_timestamp 가 0으로 할 경우 날짜 기준으로 
 
-futures_btc_balance = 3         # bitmex 코인보유량 구매시 - 팔경우 + 
+# 선물 btc 1 : 현물 btc 2 : 현물 usd 2 로 balance 시작
+futures_btc_balance = 3         # bitmex 코인보유량 
 futures_usd_balance = 0         # bitmex 
 futures_size = 0                 # bitmex Size = futures_usd_balance * -1
-spot_btc_balance = 3            # bitstamp 코인보유량
-spot_usd_balance = 30000        # bitstamp 달러보유량
+spot_btc_balance = 6            # bitstamp 코인보유량
+spot_usd_balance = 57595.8      # bitstamp 달러보유량
 
 
 
