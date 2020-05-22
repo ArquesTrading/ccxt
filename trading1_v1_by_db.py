@@ -121,19 +121,19 @@ def create_order_balance(exchanges):
         spot_btc_size = compare_value - spot_usd_balance_base        
         # 로그용 변수 할당
         spot_btc_balance = spot_btc_balance - spot_btc_size
-        spot_usd_balance = spot_usd_balance + spot_btc_size * spot_sell_price
+        spot_usd_balance = spot_usd_balance + (spot_btc_size * spot_sell_price)
         spot_action_price = spot_sell_price
     elif compare_value < spot_usd_balance_base:
         spot_btc_action = 'buy'
         spot_btc_size = spot_usd_balance_base - compare_value        
         # 로그용 변수 할당
         spot_btc_balance = spot_btc_balance + spot_btc_size
-        spot_usd_balance = spot_usd_balance - spot_btc_size * spot_buy_price
+        spot_usd_balance = spot_usd_balance - (spot_btc_size * spot_buy_price)
         spot_action_price = spot_buy_price    
         
     # print(spot_btc_action, str(spot_btc_size))
 
-    # 테스트 용은 로그 남김 ( live 에는 거래소에 market가격으로 오더 )
+    # 테스트 용은 로그 남김 ( live 에는 거래소에 market가격으로 오더 [ spot_btc_size 를 unit_btc 만큼 나눠서 몫 반복해서 주문 ] )
     order_comment = 'balance 조정중'
     params = (trading_name, timestamp, step, threshold, fees, futures_btc_balance, futures_usd_balance, spot_btc_balance, spot_usd_balance, exchanges['futures']['exchange_name'], 'balance', 0, unit,exchanges['spot']['exchange_name'],spot_btc_action, spot_action_price, spot_btc_size, 0,0,0,0,unit,0,0,0,spot_bids_no,spot_asks_no,order_comment, 0)
     db.insert_trading_log_v2(params)

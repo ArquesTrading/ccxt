@@ -143,6 +143,7 @@ def get_order_book_data(exchange_name, symbol, timestamp=None):
             # print(column)
             return data          
         else:
+            time.sleep(3)
             return get_order_book_data(exchange_name, symbol, timestamp)
         
 
