@@ -18,18 +18,18 @@ threshold = 0.002               # 0.0n refers to n%
 index = 0                       # bimex position 0: No position / 1: Bitmex short position / 2: Bitmex long position
 fees = 0.08                     # 수수료
 trading_name = 'trading_v1'     # 트레이딩알고리즘 이름
-step = 8
+step = 1
 
 for_timestamp = 1589796068930   # 테스트 시작 timestamp
 for_datetime = '2020-05-18'     # for_timestamp 가 0으로 할 경우 날짜 기준으로 
 
 # 선물 btc 1 : 현물 btc 2 : 현물 usd 2 로 balance 시작
+
 futures_btc_balance = 3         # bitmex 코인보유량 
 futures_usd_balance = 0         # bitmex 
 futures_size = 0                 # bitmex Size = futures_usd_balance * -1
 spot_btc_balance = 6            # bitstamp 코인보유량
 spot_usd_balance = 57595.8      # bitstamp 달러보유량
-
 
 
 # ------------------------------------------------------------
@@ -95,6 +95,50 @@ def get_orderbook_idx(exchange,unit):
     exchange["asks_no"] = asks_no
     return exchange
 
+def create_order_balance(exchanges):    
+    global futures_btc_balance
+    global futures_usd_balance
+    global spot_btc_balance
+    global spot_usd_balance
+
+    # 현재 현물 usd balance 와 현재 market 시장가를 기준으로 D2/K2 를 구한다.
+    # spot_usd_balance_base = D2/K2, compare_value = 2/5*C2
+    spot_usd_balance_base = spot_usd_balance / exchanges['spot']['orderbook']['bids'][0]['price']       
+    compare_value = (futures_btc_balance + spot_btc_balance + spot_usd_balance_base) / 5 * 2
+
+        
+    timestamp = int(exchanges["futures"]["orderbook"]["timestamp"]) + 1
+
+    # 비교된 값을 시장가로 던지기 위한 가격 정보 조회
+    spot_bids_no = exchanges['spot']['bids_no']
+    spot_asks_no = exchanges['spot']['asks_no']
+    spot_sell_price = exchanges['spot']['orderbook']['asks'][spot_asks_no]['price']
+    spot_buy_price = exchanges['spot']['orderbook']['bids'][spot_bids_no]['price']
+
+    # 가격 비교해서 usd 을 기준으로 coin 매수 / 매도 결정
+    if compare_value > spot_usd_balance_base:
+        spot_btc_action = 'sell'
+        spot_btc_size = compare_value - spot_usd_balance_base        
+        # 로그용 변수 할당
+        spot_btc_balance = spot_btc_balance - spot_btc_size
+        spot_usd_balance = spot_usd_balance + spot_btc_size * spot_sell_price
+        spot_action_price = spot_sell_price
+    elif compare_value < spot_usd_balance_base:
+        spot_btc_action = 'buy'
+        spot_btc_size = spot_usd_balance_base - compare_value        
+        # 로그용 변수 할당
+        spot_btc_balance = spot_btc_balance + spot_btc_size
+        spot_usd_balance = spot_usd_balance - spot_btc_size * spot_buy_price
+        spot_action_price = spot_buy_price    
+        
+    # print(spot_btc_action, str(spot_btc_size))
+
+    # 테스트 용은 로그 남김 ( live 에는 거래소에 market가격으로 오더 )
+    order_comment = 'balance 조정중'
+    params = (trading_name, timestamp, step, threshold, fees, futures_btc_balance, futures_usd_balance, spot_btc_balance, spot_usd_balance, exchanges['futures']['exchange_name'], 'balance', 0, unit,exchanges['spot']['exchange_name'],spot_btc_action, spot_action_price, spot_btc_size, 0,0,0,0,unit,0,0,0,spot_bids_no,spot_asks_no,order_comment, 0)
+    db.insert_trading_log_v2(params)
+
+
 # 각 거래소에 오더 처리 ( live 는 구매할 대상 수만 파악해서 마켓가로 order, test 는 현재 자산가치 등을 계산해서 log 남김 )
 def create_order(exchanges, futures_action, spot_action):
     global index
@@ -126,8 +170,7 @@ def create_order(exchanges, futures_action, spot_action):
     from_index = index
     to_index = 0
 
-    timestamp = exchanges["futures"]["orderbook"]["timestamp"]                
-    
+    timestamp = exchanges["futures"]["orderbook"]["timestamp"]                        
 
     if futures_action == 'sell':
         futures_unit_satoshi = get_satoshi(unit, futures_sell_price) 
@@ -157,13 +200,17 @@ def create_order(exchanges, futures_action, spot_action):
     else:
         pass
 
+    # 선물 btc 1 : 현물 btc 2 : 현물 usd 2 로 balance 비교해서 spot 의 usd 가 2/5 에 따른 spot 의 btc 사고 팔기
+
+
+
     # 선물거래소의 usd 자산을 가지고 현재 position 계산 ( 0: No position / 1: Bitmex short position / 2: Bitmex long position )
     if futures_usd_balance * -1 == 0:
         to_index = 0
     elif futures_usd_balance * -1 < 0:
         to_index = 1
     elif futures_usd_balance * -1 > 0:
-        to_index = 2
+        to_index = 2        
     
     # 테스트 용은 로그 남김 ( live 에는 거래소에 market가격으로 오더 )
     order_comment = ''
@@ -171,6 +218,11 @@ def create_order(exchanges, futures_action, spot_action):
     db.insert_trading_log_v2(params)
 
     index = to_index
+
+    if index == 0 and from_index != to_index:
+        # position 이 0 일때 spot_usd_balance 를 전체 자산의 2/5 이 되도록 수치 조정
+        create_order_balance(exchanges)
+
 
 # 트레이딩 알고리즘 메소드
 def trading(exchanges):
@@ -216,7 +268,7 @@ def trading(exchanges):
 
         print(ratio1, ratio2)
 
-        # 
+        # position 과 threshold 값 차이를 비교해서 선/현물 거래소 order 처리
         if index == 0:
             if ratio1 > 1 + threshold:                
                 if spot_usd_balance > unit * 2:
