@@ -18,7 +18,7 @@ threshold = 0.002               # 0.0n refers to n%
 index = 0                       # bimex position 0: No position / 1: Bitmex short position / 2: Bitmex long position
 fees = 0.08                     # 수수료
 trading_name = 'trading_v1'     # 트레이딩알고리즘 이름
-step = 1
+step = 2
 
 for_timestamp = 1589796068930   # 테스트 시작 timestamp
 for_datetime = '2020-05-18'     # for_timestamp 가 0으로 할 경우 날짜 기준으로 
@@ -30,6 +30,7 @@ futures_usd_balance = 0         # bitmex
 futures_size = 0                 # bitmex Size = futures_usd_balance * -1
 spot_btc_balance = 6            # bitstamp 코인보유량
 spot_usd_balance = 57595.8      # bitstamp 달러보유량
+spot_usd_start = spot_usd_balance   # 현물 거래소 시작 USD 량을 보관하자.
 
 
 # ------------------------------------------------------------
@@ -95,19 +96,48 @@ def get_orderbook_idx(exchange,unit):
     exchange["asks_no"] = asks_no
     return exchange
 
+# btc balance 조정 처리
+def create_order_coin_move(exchanges, type):
+    # type : 0 이면 bitstamp 에서 bitmex 로 1/2(spot_btc_balnace - (2 * futures_btc_balance)) coin 이동
+    # type : 1 이면 bitmex 에서 bitstamp 로 1/2((2 * futures_btc_balance) - spot_btc_balnace) coin 이동
+    global futures_btc_balance
+    global futures_usd_balance
+    global spot_btc_balance
+    global spot_usd_balance
+
+    if type == 0:
+        futures_action = 'coin add'
+        spot_action = 'coin minus'
+        move_coin_size = (spot_btc_balnace - (2 * futures_btc_balance)) * 0.5
+        futures_btc_balance = futures_btc_balance + move_coin_size
+        spot_btc_balance = spot_btc_balance - move_coin_size
+    elif type == 1:
+        futures_action = 'coin minus'
+        spot_action = 'coin add'
+        move_coin_size = ((2 * futures_btc_balance) - spot_btc_balnace) * 0.5
+        futures_btc_balance = futures_btc_balance - move_coin_size
+        spot_btc_balance = spot_btc_balance + move_coin_size
+
+    timestamp = int(exchanges["futures"]["orderbook"]["timestamp"]) + 2  
+
+    # 테스트 용은 로그 남김 ( live 에는 거래소에 market가격으로 오더 [ spot_btc_size 를 unit_btc 만큼 나눠서 몫 반복해서 주문 ] )
+    order_comment = 'coin move 조정중'
+    params = (trading_name, timestamp, step, threshold, fees, futures_btc_balance, futures_usd_balance, spot_btc_balance, spot_usd_balance, exchanges['futures']['exchange_name'], futures_action, 0, move_coin_size,exchanges['spot']['exchange_name'],spot_action, 0, move_coin_size*-1, 0,0,0,0,unit,0,0,0,spot_bids_no,spot_asks_no,order_comment, 0)
+    db.insert_trading_log_v2(params)
+    
+
+# usd balance 조정 처리
 def create_order_balance(exchanges):    
     global futures_btc_balance
     global futures_usd_balance
     global spot_btc_balance
     global spot_usd_balance
 
-    # 현재 현물 usd balance 와 현재 market 시장가를 기준으로 D2/K2 를 구한다.
-    # spot_usd_balance_base = D2/K2, compare_value = 2/5*C2
-    spot_usd_balance_base = spot_usd_balance / exchanges['spot']['orderbook']['bids'][0]['price']       
-    compare_value = (futures_btc_balance + spot_btc_balance + spot_usd_balance_base) / 5 * 2
+    global spot_usd_start
 
-        
-    timestamp = int(exchanges["futures"]["orderbook"]["timestamp"]) + 1
+    # 현재 현물 usd balance 와 시작시점의 현물 usd balance 비교한다.
+    compare_usd = spot_usd_balance - spot_usd_start
+    
 
     # 비교된 값을 시장가로 던지기 위한 가격 정보 조회
     spot_bids_no = exchanges['spot']['bids_no']
@@ -115,28 +145,34 @@ def create_order_balance(exchanges):
     spot_sell_price = exchanges['spot']['orderbook']['asks'][spot_asks_no]['price']
     spot_buy_price = exchanges['spot']['orderbook']['bids'][spot_bids_no]['price']
 
-    # 가격 비교해서 usd 을 기준으로 coin 매수 / 매도 결정
-    if compare_value > spot_usd_balance_base:
-        spot_btc_action = 'sell'
-        spot_btc_size = compare_value - spot_usd_balance_base        
-        # 로그용 변수 할당
-        spot_btc_balance = spot_btc_balance - spot_btc_size
-        spot_usd_balance = spot_usd_balance + (spot_btc_size * spot_sell_price)
-        spot_action_price = spot_sell_price
-    elif compare_value < spot_usd_balance_base:
+    if compare_usd < 0:
+        # compare_usd 만큼 compare_btc 를 팔아라
+        spot_btc_action = 'sell'  
+        spot_usd_size = compare_usd * -1
+        compare_btc = spot_usd_size / spot_buy_price
+        spot_btc_balance = spot_btc_balance - compare_btc
+        spot_usd_balance = spot_usd_start
+    elif compare_usd > 0:
+        # compare_usd 만큼 compare_btc 를 사라
         spot_btc_action = 'buy'
-        spot_btc_size = spot_usd_balance_base - compare_value        
-        # 로그용 변수 할당
-        spot_btc_balance = spot_btc_balance + spot_btc_size
-        spot_usd_balance = spot_usd_balance - (spot_btc_size * spot_buy_price)
-        spot_action_price = spot_buy_price    
+        spot_usd_size = compare_usd
+        compare_btc = spot_usd_size / spot_sell_price
+        spot_btc_balance = spot_btc_balance + compare_btc
+        spot_usd_balance = spot_usd_start
         
-    # print(spot_btc_action, str(spot_btc_size))
+    timestamp = int(exchanges["futures"]["orderbook"]["timestamp"]) + 1    
 
     # 테스트 용은 로그 남김 ( live 에는 거래소에 market가격으로 오더 [ spot_btc_size 를 unit_btc 만큼 나눠서 몫 반복해서 주문 ] )
     order_comment = 'balance 조정중'
-    params = (trading_name, timestamp, step, threshold, fees, futures_btc_balance, futures_usd_balance, spot_btc_balance, spot_usd_balance, exchanges['futures']['exchange_name'], 'balance', 0, unit,exchanges['spot']['exchange_name'],spot_btc_action, spot_action_price, spot_btc_size, 0,0,0,0,unit,0,0,0,spot_bids_no,spot_asks_no,order_comment, 0)
+    params = (trading_name, timestamp, step, threshold, fees, futures_btc_balance, futures_usd_balance, spot_btc_balance, spot_usd_balance, exchanges['futures']['exchange_name'], 'balance', 0, unit,exchanges['spot']['exchange_name'],spot_btc_action, spot_usd_size, compare_btc, 0,0,0,0,unit,0,0,0,spot_bids_no,spot_asks_no,order_comment, 0)
     db.insert_trading_log_v2(params)
+
+    if spot_btc_balance > 2 * futures_btc_balance * 1.1:
+        create_order_coin_move(exchanges, 0)
+    elif spot_btc_balance < 2 * futures_btc_balance * 0.9:
+        create_order_coin_move(exchanges, 1)
+
+
 
 
 # 각 거래소에 오더 처리 ( live 는 구매할 대상 수만 파악해서 마켓가로 order, test 는 현재 자산가치 등을 계산해서 log 남김 )
