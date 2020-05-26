@@ -12,6 +12,8 @@ import traceback
 import zlib
 import socket_data
 import dbconnect as db
+import os
+import sys, getopt
 
 
 # okEx 의 Response Data 는 inflate 로 Decode 해야 한다.
@@ -183,9 +185,9 @@ def main(argv):
             sys.exit()
 
         elif opt in ("-e", "--exchange"): # 거래소 명 입력인 경우
-            exchange_name = arg
+            exchange = arg
         
-    if len(exchange_name) < 1: # 필수항목 값이 비어있다면
+    if len(exchange) < 1: # 필수항목 값이 비어있다면
         print(FILE_NAME, "-e 거래소명은 반드시 입력 바랍니다. ( bitmex, coinbase )") # 필수임을 출력
         sys.exit(2)
 
