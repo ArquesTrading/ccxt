@@ -156,6 +156,25 @@ def insert_trading_log_v2(params):
 
     return row
 
+def insert_order_book_rows(params):    
+    query = """\
+    DECLARE @v_sp_rtn   INT
 
+    EXEC    dbo.SP_T_CRYPTO_ORDER_BOOK_INFO_REALTIME_C
+            @i_exchange_type    = ?
+        ,   @i_exchange_name    = ?
+        ,   @i_symbol           = ?        
+        ,   @i_json             = ?
+        ,   @o_sp_rtn           = @v_sp_rtn OUTPUT;
+
+    SELECT  @v_sp_rtn as out
+   
+    """
+    with connect() as cnxn:
+        cursor = cnxn.cursor()
+        cursor.execute(query, params)        
+        row = cursor.fetchone()
+
+    return row
 
 
