@@ -17,7 +17,7 @@ from scipy.stats import norm
 root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root + '/python')
 
-amount = 10             # 주문 당 계약(달러) 수 (최소한 100의 배수로)
+amount = 1000           # 주문 당 계약(달러) 수 (최소한 100의 배수로)
 orders = 4              # (위, 아래 각각) 기준가에서 멀어지면서 1000, 2000, 3000, 4000 계약단위로 메이킹 주문
                         # (예) 매도 기준가가 9000달러일 경우, 9000달러 1000계약, 9000.5달러 2000계약, 9001달러 3000계약, 9001.5달러 4000계약 매도 주문
 threshold = 0.001       # 마켓메이킹 스프레드 0.1%
